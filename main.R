@@ -13,12 +13,12 @@ library(parallel)
 library(stringi)
 library(RColorBrewer)
 
-source("~/Documents/dark_chla/dark_offset_chla/pathways.R")
+source("~/TRAITEMENT_FLOTTEUR/FLOAT_DM/DM_CHLA/STEP1_DARKESTIMATION/dark_offset_chla/pathways.R")
 source(paste(path_to_source, "file_names.R", sep=""))
 source(paste(path_to_source, "open_profiles.R", sep=""))
 source(paste(path_to_source, "plot_minima.R", sep=""))
-source(paste(path_to_DMMC, "process_files.R", sep="")) # only necessary if -M is going to be used
-source(paste(path_to_DMMC, "error_message.R", sep="")) # only necessary if -M is going to be used
+#source(paste(path_to_DMMC, "process_files.R", sep="")) # only necessary if -M is going to be used
+#source(paste(path_to_DMMC, "error_message.R", sep="")) # only necessary if -M is going to be used
 
 ### Set parameters
 
@@ -66,10 +66,17 @@ if (use_DMMC) {
     DEEP_EST = Dark_MLD_table_coriolis(WMO, path_to_netcdf, index_ifremer, n_cores=num_cores)
 }
 
-M = mcmapply(open_profiles, name_list, 
-             MoreArgs=list(PARAM_NAME="CHLA", index_ifremer=index_ifremer, index_greylist=index_greylist, WMO=WMO, 
-                           use_DMMC=use_DMMC, DEEP_EST=DEEP_EST, path_to_netcdf=path_to_netcdf), 
-             mc.cores=num_cores, USE.NAMES=FALSE)
+print(name_list) 
+
+#M = mcmapply(open_profiles, name_list, 
+#             MoreArgs=list(PARAM_NAME="CHLA", index_ifremer=index_ifremer, index_greylist=index_greylist, WMO=WMO, 
+#                           use_DMMC=use_DMMC, DEEP_EST=DEEP_EST, path_to_netcdf=path_to_netcdf), 
+#             mc.cores=num_cores, USE.NAMES=FALSE)
+
+M = mapply(open_profiles, name_list,
+             MoreArgs=list(PARAM_NAME="CHLA", index_ifremer=index_ifremer, index_greylist=index_greylist, WMO=WMO,
+                           use_DMMC=use_DMMC, DEEP_EST=DEEP_EST, path_to_netcdf=path_to_netcdf),USE.NAMES=FALSE
+             )
 
 ### compute minima
 

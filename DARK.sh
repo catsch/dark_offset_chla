@@ -68,4 +68,4 @@ esac
 done
 
 
-Rscript ~/Documents/dark_chla/dark_offset_chla/main.R $WMO $plot_name $median_size $y_zoom $use_DMMC $use_kal $runmed_size $date_axis $do_write
+Rscript ~/TRAITEMENT_FLOTTEUR/FLOAT_DM/DM_CHLA/STEP1_DARKESTIMATION/dark_offset_chla/main.R $WMO $plot_name $median_size $y_zoom $use_DMMC $use_kal $runmed_size $date_axis $do_write
